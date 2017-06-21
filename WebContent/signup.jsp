@@ -8,5 +8,11 @@
 </head>
 <body>
 Sign up!
+<br/>
+<form action="/JSP_MVC_model/registrator" method="post">
+Login: <input type="text" name="login">
+Password: <input type="password" name="password">
+<input type="submit" value="submit">
+</form>
 </body>
 </html>

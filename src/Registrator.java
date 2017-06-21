@@ -1,10 +1,6 @@
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,37 +8,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Validator
+ * Servlet implementation class Registrator
  */
-@WebServlet("/validator")
-public class Validator extends HttpServlet {
+@WebServlet("/registrator")
+public class Registrator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private static Map<String, String> pwdMap = new HashMap();   
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Validator() {
+    public Registrator() {
         super();
-        
-        pwdMap.put("admin", "admin1");
+        // TODO Auto-generated constructor stub
     }
 
-    public static Map getMap(){
-    	return pwdMap;
-    }
-    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
-		PrintWriter out = response.getWriter();
-		
-		if (pwdMap.get(login) != null && pwdMap.get(login).equals(password)){
-			out.println("Welcome!");
-		} else {
-			out.print("login failed!");
+		try {
+			String login = request.getParameter("login");
+			String password = request.getParameter("password");
+			
+			Validator.getMap().put(login, password);
+		} catch (Exception e) {
+			response.getWriter().println(e.getStackTrace());//TODO should be sent to log.
+		} finally {
+			getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 	}
 
